@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    container_name: driving-school-db
+    image: postgres
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
