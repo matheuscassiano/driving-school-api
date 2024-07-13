@@ -6,10 +6,8 @@ export class CreateTableSchools1720871348977 implements MigrationInterface {
     columns: [
       {
         name: 'id',
-        type: 'int',
+        type: 'SERIAL',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment',
       },
       {
         name: 'name',

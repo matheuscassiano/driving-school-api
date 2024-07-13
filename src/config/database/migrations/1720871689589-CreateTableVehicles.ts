@@ -14,10 +14,8 @@ export class CreateTableVehicles1720871689589 implements MigrationInterface {
     columns: [
       {
         name: 'id',
-        type: 'int',
+        type: 'SERIAL',
         isPrimary: true,
-        isGenerated: true,
-        generationStrategy: 'increment',
       },
       {
         name: 'name',
@@ -26,7 +24,7 @@ export class CreateTableVehicles1720871689589 implements MigrationInterface {
       },
       {
         name: 'year',
-        type: 'INTERGER',
+        type: 'INTEGER',
       },
       {
         name: 'plate',
