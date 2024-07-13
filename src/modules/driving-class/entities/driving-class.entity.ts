@@ -1,9 +1,16 @@
 import { BaseEntity } from 'src/config/base.entity';
-import { ICourse } from 'src/modules/course/interfaces/course.interface';
+import { Course } from 'src/modules/course/entities/course.entity';
 import { IDrivingClass } from 'src/modules/driving-class/interfaces/driving-class.interface';
-import { IUser } from 'src/modules/user/interfaces/user.interface';
-import { IVehicle } from 'src/modules/vehicle/interfaces/vehicles.interface';
-import { Column, Entity } from 'typeorm';
+import { User } from 'src/modules/user/entities/user.entity';
+import { Vehicle } from 'src/modules/vehicle/entities/vehicle.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { DrivingClassStatus } from '../enums/driving-class-status.enum';
 import { DrivingClassType } from '../enums/driving-class-type.enum';
 
@@ -24,7 +31,7 @@ export class DrivingClass extends BaseEntity implements IDrivingClass {
   @Column()
   location: string;
 
-  @Column()
+  @Column({ name: 'is_active' })
   isActive: boolean;
 
   @Column()
@@ -34,26 +41,48 @@ export class DrivingClass extends BaseEntity implements IDrivingClass {
   status: DrivingClassStatus;
 
   // Adicionar relação ManyToMany com a entidade de Usuários
-  @Column()
-  students: IUser[];
+  @ManyToMany(() => User, (user) => user.studentOfDrivingClasses, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinTable({
+    name: 'driving_classes_students',
+    joinColumn: { name: 'driving_class_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'student_id', referencedColumnName: 'id' },
+  })
+  students: User[];
 
   // Adicionar relação com a entidade de Usuários
-  @Column()
+  @Column({ name: 'teacher_id' })
   teacherId: number;
 
-  @Column()
-  teacher: IUser;
+  @ManyToOne(() => User, (User) => User.teacherOfDrivingClass, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'teacher_id' })
+  teacher: User;
 
-  // Adicionar relação ManyToOne com a entidade de Cursos
   @Column({ name: 'course_id' })
   courseId: number;
 
-  @Column()
-  course: ICourse;
+  @ManyToOne(() => Course, (course) => course.drivingClasses, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'course_id' })
+  course: Course;
 
   @Column({ name: 'vehicle_id' })
   vehicleId?: number;
 
-  @Column()
-  vehicle?: IVehicle;
+  @ManyToOne(() => Vehicle, (Vehicle) => Vehicle.drivingClasses, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'vehicle_id' })
+  vehicle?: Vehicle;
 }
