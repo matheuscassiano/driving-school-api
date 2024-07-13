@@ -34,7 +34,7 @@ export class CreateTableCourses1720872792644 implements MigrationInterface {
         type: 'TIMESTAMP',
       },
       {
-        name: 'isActive',
+        name: 'is_active',
         type: 'BOOLEAN',
         default: true,
       },

@@ -15,6 +15,16 @@ export class CreateTableSchools1720871348977 implements MigrationInterface {
         length: '255',
       },
       {
+        name: 'description',
+        type: 'VARCHAR',
+        length: '255',
+      },
+      {
+        name: 'location',
+        type: 'VARCHAR',
+        length: '255',
+      },
+      {
         name: 'document',
         type: 'VARCHAR',
         length: '255',
