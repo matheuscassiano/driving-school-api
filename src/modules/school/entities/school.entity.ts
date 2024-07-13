@@ -11,6 +11,15 @@ export class School extends BaseEntity implements ISchool {
   name: string;
 
   @Column()
+  email: string;
+
+  @Column()
+  phone: string;
+
+  @Column()
+  document: string;
+
+  @Column()
   description: string;
 
   @Column()

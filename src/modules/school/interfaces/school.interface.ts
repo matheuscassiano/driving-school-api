@@ -6,6 +6,9 @@ import { Vehicle } from 'src/modules/vehicle/entities/vehicle.entity';
 export interface ISchool extends IBase {
   name: string;
   description: string;
+  document: string;
+  phone: string;
+  email: string;
   location: string;
   courses: ICourse[];
   vehicles: Vehicle[];
