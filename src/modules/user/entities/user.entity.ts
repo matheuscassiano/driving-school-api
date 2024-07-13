@@ -31,7 +31,7 @@ export class User extends BaseEntity implements IUser {
   document: string;
 
   @Column()
-  picurte: string;
+  picture: string;
 
   @Column()
   type: UserType;

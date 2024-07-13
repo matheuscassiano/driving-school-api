@@ -20,9 +20,6 @@ export class Course extends BaseEntity implements ICourse {
   @Column()
   description: string;
 
-  @Column()
-  duration: number;
-
   @Column({ name: 'start_date' })
   startDate: Date;
 
