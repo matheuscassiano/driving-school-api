@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { IBase } from './base.interface';
 
-@Entity('time_registers')
+@Entity()
 export class BaseEntity implements IBase {
   @PrimaryGeneratedColumn()
   id: number;
