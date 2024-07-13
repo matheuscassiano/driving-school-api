@@ -4,6 +4,7 @@ import { IDrivingClass } from 'src/modules/driving-class/interfaces/driving-clas
 import { Column, Entity } from 'typeorm';
 import { UserType } from '../enums/user-type.enum';
 import { IUser } from '../interfaces/user.interface';
+import { ISchool } from 'src/modules/school/interfaces/school.interface';
 
 @Entity('users')
 export class User extends BaseEntity implements IUser {
@@ -17,6 +18,13 @@ export class User extends BaseEntity implements IUser {
 
   @Column()
   picurte: string;
+
+  @Column()
+  schoolId: number;
+
+  // Adicionar relação ManyToOne com a entidade de Escolas
+  @Column()
+  school: ISchool;
 
   // Adicionar relação ManyToMany com a entidade de Aulas
   @Column()
