@@ -1,39 +1,68 @@
 import { BaseEntity } from 'src/config/base.entity';
-import { ICourse } from 'src/modules/course/interfaces/course.interface';
-import { IDrivingClass } from 'src/modules/driving-class/interfaces/driving-class.interface';
-import { Column, Entity } from 'typeorm';
+import { Course } from 'src/modules/course/entities/course.entity';
+import { DrivingClass } from 'src/modules/driving-class/entities/driving-class.entity';
+import { School } from 'src/modules/school/entities/school.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { UserType } from '../enums/user-type.enum';
 import { IUser } from '../interfaces/user.interface';
-import { ISchool } from 'src/modules/school/interfaces/school.interface';
 
 @Entity('users')
 export class User extends BaseEntity implements IUser {
   @Column()
   name: string;
 
+  @Column()
   email: string;
 
   @Column()
   password: string;
 
   @Column()
+  phone: string;
+
+  @Column()
+  document: string;
+
+  @Column()
   picurte: string;
 
   @Column()
+  type: UserType;
+
+  @Column({ name: 'school_id' })
   schoolId: number;
 
-  // Adicionar relação ManyToOne com a entidade de Escolas
-  @Column()
-  school: ISchool;
+  @ManyToOne(() => School, (school) => school.users, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'school_id' })
+  school: School;
 
-  // Adicionar relação ManyToMany com a entidade de Aulas
-  @Column()
-  drivingClasses: IDrivingClass[];
+  @ManyToMany(() => Course, (course) => course.users)
+  courses: Course[];
 
-  // Adicionar relação ManyToMany com a entidade de Cursos
-  @Column()
-  courses: ICourse[];
+  // Validar relação entre usuarios (teachers e students) e aulas de direção
+  @ManyToMany(() => DrivingClass, (driving) => driving.students, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinTable({
+    name: 'driving_classes_students',
+    joinColumn: { name: 'student_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'driving_class_id', referencedColumnName: 'id' },
+  })
+  studentOfDrivingClasses?: DrivingClass[];
 
-  @Column()
-  type: UserType;
+  @ManyToMany(() => DrivingClass, (driving) => driving.teacher)
+  @JoinTable()
+  teacherOfDrivingClass?: DrivingClass;
 }

@@ -1,9 +1,16 @@
 import { BaseEntity } from 'src/config/base.entity';
-import { IDrivingClass } from 'src/modules/driving-class/interfaces/driving-class.interface';
-import { IUser } from 'src/modules/user/interfaces/user.interface';
-import { Column, Entity } from 'typeorm';
+import { DrivingClass } from 'src/modules/driving-class/entities/driving-class.entity';
+import { School } from 'src/modules/school/entities/school.entity';
+import { User } from 'src/modules/user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { ICourse } from '../interfaces/course.interface';
-import { ISchool } from 'src/modules/school/interfaces/school.interface';
 
 @Entity('courses')
 export class Course extends BaseEntity implements ICourse {
@@ -16,27 +23,32 @@ export class Course extends BaseEntity implements ICourse {
   @Column()
   duration: number;
 
-  @Column()
+  @Column({ name: 'start_date' })
   startDate: Date;
 
-  @Column()
+  @Column({ name: 'end_date' })
   endDate: Date;
 
-  @Column()
+  @Column({ name: 'is_active' })
   isActive: boolean;
 
-  @Column()
+  @Column({ name: 'school_id' })
   schoolId: number;
 
-  // Adicionar relação ManyToOne com a entidade de Escolas
-  @Column()
-  school: ISchool;
+  @ManyToOne(() => School, (school) => school.courses, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'school_id' })
+  school: School;
 
-  // Adicionar relação ManyToOne com a entidade de Aulas
-  @Column()
-  drivingClasses: IDrivingClass[];
+  @OneToMany(() => DrivingClass, (drivingClass) => drivingClass.course, {
+    cascade: true,
+    eager: true,
+  })
+  drivingClasses: DrivingClass[];
 
-  // Adicionar relação ManyToOne com a entidade de Usuários
-  @Column()
-  users: IUser[];
+  @ManyToMany(() => User, (user) => user.courses)
+  users: User[];
 }
