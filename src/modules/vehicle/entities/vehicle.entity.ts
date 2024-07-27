@@ -1,17 +1,14 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { DrivingClass } from 'src/modules/driving-class/entities/driving-class.entity';
-import { School } from 'src/modules/school/entities/school.entity';
+import { BaseEntity } from '../../../config/base.entity';
+import { DrivingClass } from '../../driving-class/entities/driving-class.entity';
+import { School } from '../../school/entities/school.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { VehicleModel } from '../enums/vehicle-model.enum';
+import { VehicleCategory } from '../enums/vehicle-model.enum';
 import { VehicleStatus } from '../enums/vehicle-status.enum';
 import { VehicleType } from '../enums/vehicle-type.enum';
 import { IVehicle } from '../interfaces/vehicles.interface';
 
 @Entity('vehicles')
 export class Vehicle extends BaseEntity implements IVehicle {
-  @Column()
-  name: string;
-
   @Column()
   year: number;
 
@@ -25,7 +22,13 @@ export class Vehicle extends BaseEntity implements IVehicle {
   brand: string;
 
   @Column()
-  model: VehicleModel;
+  model: string;
+
+  @Column({ nullable: true })
+  picture?: string;
+
+  @Column()
+  category: VehicleCategory;
 
   @Column()
   type: VehicleType;

@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { Course } from 'src/modules/course/entities/course.entity';
-import { User } from 'src/modules/user/entities/user.entity';
-import { Vehicle } from 'src/modules/vehicle/entities/vehicle.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseEntity } from '../../../config/base.entity';
+import { Course } from '../../course/entities/course.entity';
+import { User } from '../../user/entities/user.entity';
+import { Vehicle } from '../../vehicle/entities/vehicle.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { ISchool } from '../interfaces/school.interface';
 
 @Entity('schools')
@@ -24,6 +24,17 @@ export class School extends BaseEntity implements ISchool {
 
   @Column()
   location: string;
+
+  @Column({ name: 'owner_id' })
+  ownerId: number;
+
+  @ManyToOne(() => User, (user) => user.school, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'owner_id' })
+  owner: User;
 
   @OneToMany(() => Course, (course) => course.school, {
     cascade: true,

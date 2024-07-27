@@ -1,4 +1,4 @@
-import { VehicleModel } from 'src/modules/vehicle/enums/vehicle-model.enum';
+import { VehicleCategory } from 'src/modules/vehicle/enums/vehicle-model.enum';
 import { VehicleStatus } from 'src/modules/vehicle/enums/vehicle-status.enum';
 import { VehicleType } from 'src/modules/vehicle/enums/vehicle-type.enum';
 import {
@@ -18,11 +18,6 @@ export class CreateTableVehicles1720871689589 implements MigrationInterface {
         isPrimary: true,
       },
       {
-        name: 'name',
-        type: 'VARCHAR',
-        length: '255',
-      },
-      {
         name: 'year',
         type: 'INTEGER',
       },
@@ -37,15 +32,20 @@ export class CreateTableVehicles1720871689589 implements MigrationInterface {
         length: '255',
       },
       {
+        name: 'model',
+        type: 'VARCHAR',
+        length: '255',
+      },
+      {
         name: 'color',
         type: 'VARCHAR',
         length: '255',
       },
       {
-        name: 'model',
+        name: 'category',
         type: 'enum',
-        enum: Object.keys(VehicleModel),
-        default: `'${VehicleModel.SUV}'`,
+        enum: Object.keys(VehicleCategory),
+        default: `'${VehicleCategory.SUV}'`,
       },
       {
         name: 'type',

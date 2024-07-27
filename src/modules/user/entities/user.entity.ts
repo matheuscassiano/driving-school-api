@@ -1,7 +1,7 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { Course } from 'src/modules/course/entities/course.entity';
-import { DrivingClass } from 'src/modules/driving-class/entities/driving-class.entity';
-import { School } from 'src/modules/school/entities/school.entity';
+import { BaseEntity } from '../../../config/base.entity';
+import { Course } from '../../course/entities/course.entity';
+import { DrivingClass } from '../../driving-class/entities/driving-class.entity';
+import { School } from '../../school/entities/school.entity';
 import {
   Column,
   Entity,
