@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/config/base.entity';
-import { Course } from 'src/modules/course/entities/course.entity';
+import { BaseEntity } from '../../../config/base.entity';
+import { Course } from '../../course/entities/course.entity';
 import { IDrivingClass } from 'src/modules/driving-class/interfaces/driving-class.interface';
-import { User } from 'src/modules/user/entities/user.entity';
-import { Vehicle } from 'src/modules/vehicle/entities/vehicle.entity';
+import { User } from '../../user/entities/user.entity';
+import { Vehicle } from '../../vehicle/entities/vehicle.entity';
 import {
   Column,
   Entity,

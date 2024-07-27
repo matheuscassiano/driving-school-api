@@ -10,7 +10,7 @@ export interface IUser extends IBase {
   password: string;
   phone: string;
   document: string;
-  picurte: string;
+  picture: string;
   type: UserType;
   schoolId?: number;
   school?: ISchool;

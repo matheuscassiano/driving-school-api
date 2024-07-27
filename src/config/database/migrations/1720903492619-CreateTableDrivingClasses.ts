@@ -43,7 +43,7 @@ export class CreateTableDrivingClasses1720903492619
         length: '255',
       },
       {
-        name: 'isActive',
+        name: 'is_active',
         type: 'BOOLEAN',
         default: true,
       },
